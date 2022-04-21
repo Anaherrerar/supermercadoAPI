@@ -27,6 +27,7 @@ public class Producto {
 
     @Column(nullable = false, length = 10)
     private String fechavencProducto;
+<<<<<<< HEAD
 
     public Object getCodigoPro() {
     }
@@ -45,5 +46,7 @@ public class Producto {
 
     public void setCantidad(Object cantidad) {
     }
+=======
+>>>>>>> origin/main
 }
 
