@@ -2,7 +2,6 @@ package com.supermercado.producto.controllers;
 
 import com.supermercado.producto.entity.Producto;
 import com.supermercado.producto.repository.ProductoRepository;
-<<<<<<< HEAD
 import com.supermercado.producto.util.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import java.util.*;
 
 @RestController
 
-public class ProductoController {
+public class ProductoControllers {
 
     @Autowired
     private ProductoRepository productoRepository;
@@ -27,67 +26,32 @@ public class ProductoController {
         }
         Map<String,String> errorResponse = new LinkedHashMap<>();
         errorResponse.put("error","Not found");
-=======
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-public class ProductoControllers {
-
-    @Autowired
-    private ProductoRepository productoRepository;
-
-    @RequestMapping(value = "api/productos/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Producto> getProducto(@PathVariable Long id) {
-        Optional<Producto> foundProducto = productoRepository.findById(id);
-        if (foundProducto.isPresent()) {
-            return ResponseEntity.ok(foundProducto.get());
-        }
-        Map<String, String> errorResponse = new LinkedHashMap<>();
-        errorResponse.put("error", "Not found");
->>>>>>> origin/main
         errorResponse.put("message", "Producto not found");
         errorResponse.put("status", HttpStatus.NOT_FOUND.toString());
         return new ResponseEntity(errorResponse, HttpStatus.NOT_FOUND);
 
     }
-<<<<<<< HEAD
-    @RequestMapping(value = "api/productos", method = RequestMethod.POST)
-    public Producto createProducto(@RequestBody Producto producto){
-=======
 
     @RequestMapping(value = "api/productos", method = RequestMethod.POST)
-    public Producto createProducto(@RequestBody Producto producto) {
->>>>>>> origin/main
-        return productoRepository.save(producto);
+    public Producto createProducto(@RequestBody Producto producto){
+    return productoRepository.save(producto);
     }
 
     @RequestMapping(value = "api/productos", method = RequestMethod.GET)
-<<<<<<< HEAD
     public List<Producto> listProductos(){
-
-        return productoRepository.findAll();
+    return productoRepository.findAll();
     }
 
     @RequestMapping(value = "api/productos/{id}", method = RequestMethod.PUT)
-    public ResponseEntity editProducto(@RequestBody Producto newProducto, @PathVariable Long id){
+    public ResponseEntity editProducto(@RequestBody Producto newProducto,@PathVariable Long id ){
         Map<String, String> response = new HashMap<>();
         try {
             Producto producto = productoRepository.findById(id).get();
-            producto.setCodigoPro(newProducto.getCodigoPro());
-            producto.setNombre(newProducto.getNombre());
+            producto.setNumeroPro(newProducto.getNumeroPro());
             producto.setValorProducto(newProducto.getValorProducto());
-            producto.setTipoProducto(newProducto.getTipoProducto());
-            producto.setCantidad(newProducto.getCantidad());
+            producto.setDescripProducto(newProducto.getDescripProducto());
+            producto.setValorProducto(newProducto.getValorProducto());
+            producto.setFechavencProducto(newProducto.getFechavencProducto());
             productoRepository.save(producto);
 
             return message.viewMessage(HttpStatus.OK,"success","product edit success!!");
@@ -95,6 +59,9 @@ public class ProductoControllers {
             return message.viewMessage(HttpStatus.NOT_FOUND,"error","Product not found!");
         }
     }
+
+
+
     @RequestMapping(value = "api/productos/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteProducto(@PathVariable Long id){
         Map<String, String> response = new HashMap<>();
@@ -109,12 +76,8 @@ public class ProductoControllers {
 
     }
 }
-=======
-    public List<Producto> listProductos() {
 
-        return productoRepository.findAll();
 
-    }
 
-}
->>>>>>> origin/main
+
+
