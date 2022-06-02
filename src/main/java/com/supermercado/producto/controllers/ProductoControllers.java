@@ -19,17 +19,13 @@ public class ProductoControllers {
     private Message message = new Message();
 
     @RequestMapping(value = "api/productos/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Producto> getProducto(@PathVariable Long id){
+    public Optional<Producto> getProducto(@PathVariable Long id){
         Optional<Producto> foundProducto = productoRepository.findById(id);
         if (foundProducto.isPresent()){
-            return ResponseEntity.ok(foundProducto.get());
-        }
-        Map<String,String> errorResponse = new LinkedHashMap<>();
-        errorResponse.put("error","Not found");
-        errorResponse.put("message", "Producto not found");
-        errorResponse.put("status", HttpStatus.NOT_FOUND.toString());
-        return new ResponseEntity(errorResponse, HttpStatus.NOT_FOUND);
+            return foundProducto;
 
+        }
+        return null;
     }
 
     @RequestMapping(value = "api/productos", method = RequestMethod.POST)
