@@ -1,4 +1,53 @@
+async function login(){
+    var myForm = document.getElementById("myForm");
+    var formData = new FormData(myForm);
+    var jsonData = {};
+    for(var [k, v] of formData){//convertimos los datos a json
+        jsonData[k] = v;
+    }
+    var settings={
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    }
+    const request = await fetch("api/auth/login",settings);
+    //console.log(await request.text());
+    if(request.ok){
+        const respuesta = await request.json();
+
+        localStorage.token = respuesta.detail;
+
+        localStorage.email = jsonData.email;
+        location.href= "dashboard.html";
+    }
+}
+
+async function sendUser(path){
+    validaToken()
+    var myForm = document.getElementById("myForm");
+    var formData = new FormData(myForm);
+    var jsonData = {};
+    for(var [k, v] of formData){//convertimos los datos a json
+        jsonData[k] = v;
+    }
+    const request = await fetch(path, {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':localStorage.token
+        },
+        body: JSON.stringify(jsonData)
+    });
+    myForm.reset();
+    console.log(await request.text())
+}
+
 async function sendData(path){
+    validaToken()
     var myForm = document.getElementById("myForm");
     var formData = new FormData(myForm);
     var jsonData = {};
@@ -19,6 +68,7 @@ async function sendData(path){
 
 
 function listar(){
+    validaToken()
     var settings={
         method: 'GET',
         headers:{
@@ -53,6 +103,7 @@ function listar(){
 }
 
 function traerModificarProducto(id){
+    validaToken()
     var settings={
         method: 'GET',
         headers:{
@@ -91,6 +142,7 @@ function traerModificarProducto(id){
 }
 
 async function modificarProducto(id){
+    validaToken()
     var myForm = document.getElementById("myForm");
     var formData = new FormData(myForm);
     var jsonData = {};
@@ -115,6 +167,7 @@ async function modificarProducto(id){
 
 
 function eliminarProducto(id){
+    validaToken()
     var settings={
         method: 'DELETE',
         headers:{
@@ -130,6 +183,7 @@ function eliminarProducto(id){
 }
 
 async function sendSearch(path){
+    validaToken()
     var myForm = document.getElementById("myForm");
     var formData = new FormData(myForm);
     var jsonData = {};
@@ -148,6 +202,7 @@ async function sendSearch(path){
 }
 
 function verProducto(id){
+    validaToken()
     var settings={
         method: 'GET',
         headers:{
@@ -197,4 +252,14 @@ function alertas(mensaje,tipo){
     document.getElementById("datos").innerHTML=alerta;
 
 
+}
+
+function salir(){
+    localStorage.clear();
+    location.href = "index.html"
+}
+function validaToken(){
+    if(localStorage.token == undefined){
+        salir();
+    }
 }
