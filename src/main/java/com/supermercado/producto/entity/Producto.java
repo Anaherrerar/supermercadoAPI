@@ -28,6 +28,9 @@ public class Producto {
     @Column(nullable = false, length = 10)
     private String fechavencProducto;
 
+    @Column(name = "creador_producto", nullable = false,unique = true,length = 30)
+    private String creador_producto; 
+
 
 
 

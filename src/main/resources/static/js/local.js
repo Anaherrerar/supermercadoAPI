@@ -235,6 +235,7 @@ function listar(){
           '<td>'+producto.descripProducto+'</td>'+
           '<td>'+producto.valorProducto+'</td>'+
           '<td>'+producto.fechavencProducto+'</td>'+
+          '<td>'+producto.creador_producto+'</td>'+
           '<td>'+
             '<button type="button" class="btn btn-outline-danger" onclick="eliminarProducto(\''+producto.id+'\')"><i class="fa-solid fa-user-minus"></i></button>'+
             '<a href="#" onclick="traerModificarProducto(\''+producto.id+'\')" class="btn btn-outline-warning"><i class="fa-solid fa-user-pen"></i></a>'+
